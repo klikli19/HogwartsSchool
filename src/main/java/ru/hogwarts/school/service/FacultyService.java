@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -36,4 +37,6 @@ public class FacultyService {
     public Collection<Faculty> getAll() {
         return faculties.values();
     }
+
+
 }

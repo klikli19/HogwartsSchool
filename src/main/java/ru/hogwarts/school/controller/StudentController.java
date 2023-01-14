@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     @PutMapping
-    public ResponseEntity<Student> editStudent(Student student) {
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student editStudent = studentService.editStudent(student);
         if (editStudent == null) {
             return ResponseEntity.notFound().build();
@@ -51,5 +51,11 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<Collection<Student>> getAll() {
         return ResponseEntity.ok(studentService.getAll());
+    }
+
+    @GetMapping("/filter/{age}")
+    public ResponseEntity<Collection<Student>> getAge(@PathVariable int age) {
+        return ResponseEntity.ok(studentService.getAge(age));
+
     }
 }
