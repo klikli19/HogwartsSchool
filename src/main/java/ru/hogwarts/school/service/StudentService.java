@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -36,13 +37,7 @@ public class StudentService {
         return students.values();
     }
 
-    public Collection<Student> getAge(int age) {
-        Collection<Student> list = new ArrayList<>();
-        for (long i = 0; i < students.size(); i++) {
-            if (students.get(i).getAge() == age) {
-                list.add(students.get(i));
-            }
-        }
-        return list;
+    public List<Student> getAge(int age) {
+        return students.values().stream().filter(student -> student.getAge() == age).collect(Collectors.toList());
     }
 }
