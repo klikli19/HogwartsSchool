@@ -18,8 +18,8 @@ public class FacultyController {
 
 
     @PostMapping
-    public Faculty creatFaculty(@RequestBody Faculty faculty ) {
-        return facultyService.creatFaculty(faculty);
+    public Faculty createFaculty(@RequestBody Faculty faculty ) {
+        return facultyService.createFaculty(faculty);
     }
 
     @GetMapping("{id}")

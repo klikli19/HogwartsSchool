@@ -17,7 +17,7 @@ public class FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
-    public Faculty creatFaculty(Faculty faculty) {
+    public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
