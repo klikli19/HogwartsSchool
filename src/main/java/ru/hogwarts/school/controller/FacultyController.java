@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -23,7 +24,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable long id) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty findFaculties = facultyService.findFaculty(id);
         if (findFaculties == null) {
             return ResponseEntity.notFound().build();
@@ -35,7 +36,7 @@ public class FacultyController {
     public ResponseEntity<Faculty> editFaculty(Faculty faculty) {
         Faculty editFaculties = facultyService.editFaculty(faculty);
         if (editFaculties == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(editFaculties);
     }
