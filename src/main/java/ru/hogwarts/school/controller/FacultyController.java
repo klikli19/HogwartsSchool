@@ -62,4 +62,9 @@ public class FacultyController {
                                                                 @RequestParam(required = false) String color) {
         return ResponseEntity.ok(facultyService.getFacultyByNameOrColor(name, color));
     }
+
+    @GetMapping("students")
+    public ResponseEntity<Collection<Faculty>> getStudents(@RequestParam Long id) {
+        return ResponseEntity.ok(facultyService.getStudents(id));
+    }
 }

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class FacultyService {
     private final FacultyRepository facultyRepository;
 
+
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
@@ -49,5 +50,9 @@ public class FacultyService {
 
     public Collection<Faculty> getFacultyByNameOrColor(String name, String color) {
         return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
+
+    public Collection<Faculty> getStudents(Long id) {
+        return facultyRepository.findFacultyByStudentId(id);
     }
 }
