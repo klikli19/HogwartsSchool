@@ -2,9 +2,10 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Faculty;
+
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
+
 
 import java.util.Collection;
 import java.util.List;
@@ -67,4 +68,6 @@ public class StudentController {
     public ResponseEntity<Collection<Student>> getFaculty(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getFaculty(id));
     }
+
+
 }

@@ -18,7 +18,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
-    @Value("${student.avatar.dir.path}")
+    @Value("${avatar.dir.path}")
     private String avatarDir;
 
     private final StudentService service;
@@ -31,7 +31,7 @@ public class AvatarService {
 
     public void uploadAvatar(long studentId, MultipartFile file) throws IOException {
         Student student = service.findStudent(studentId);
-        Path path = Path.of(avatarDir, getExtension(Objects.requireNonNull(file.getOriginalFilename())));
+        Path path = Path.of(avatarDir, student + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(path.getParent());
         Files.deleteIfExists(path);
 
