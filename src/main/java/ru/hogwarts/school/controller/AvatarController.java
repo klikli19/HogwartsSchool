@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +46,14 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping(value = "/{id}/avatar-from-db")
+    public ResponseEntity<byte[]> downloadAvatarBD(@PathVariable Long id) {
+        Avatar avatar = avatarService.getAvatar(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
+        httpHeaders.setContentLength(avatar.getData().length);
+        return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(avatar.getData());
     }
 }
