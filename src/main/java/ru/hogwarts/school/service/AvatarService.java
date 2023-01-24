@@ -11,7 +11,8 @@ import ru.hogwarts.school.repositories.AvatarRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
+import java.util.Collection;
+
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -59,6 +60,15 @@ public class AvatarService {
     }
 
     private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);}
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public void deleteAvatar(Long id) {
+        avatarRepository.delete(getAvatar(id));
+    }
+
+    public Collection<Avatar> getAll() {
+        return avatarRepository.findAll();
+    }
 
 }
