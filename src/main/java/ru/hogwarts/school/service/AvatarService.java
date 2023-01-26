@@ -67,8 +67,5 @@ public class AvatarService {
         avatarRepository.delete(getAvatar(id));
     }
 
-    public Collection<Avatar> getAll() {
-        return avatarRepository.findAll();
-    }
 
 }

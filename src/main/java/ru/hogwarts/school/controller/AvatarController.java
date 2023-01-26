@@ -63,8 +63,5 @@ public class AvatarController {
         avatarService.deleteAvatar(id);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Avatar>> getAllAvatar() {
-        return ResponseEntity.ok(avatarService.getAll());
-    }
+
 }
