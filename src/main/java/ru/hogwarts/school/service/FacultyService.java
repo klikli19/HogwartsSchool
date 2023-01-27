@@ -1,15 +1,13 @@
 package ru.hogwarts.school.service;
 
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 @Service
