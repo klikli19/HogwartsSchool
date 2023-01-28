@@ -55,6 +55,7 @@ public class FacultyControllerTests {
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(eq(id))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.existsById(eq(id))).thenReturn(true);
 
         mvc.perform(MockMvcRequestBuilders
                 .post("/faculties")

@@ -28,10 +28,10 @@ public class FacultyService {
     }
 
     public Faculty editFaculty(Faculty faculty) {
-//        if (facultyRepository.existsById(faculty.getId())) {
+        if (facultyRepository.existsById(faculty.getId())) {
             return facultyRepository.save(faculty);
-//        }
-//        return null;
+        }
+        return null;
     }
 
     public void deleteFaculty(long id) {
