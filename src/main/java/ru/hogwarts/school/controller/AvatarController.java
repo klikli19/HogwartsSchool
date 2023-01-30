@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class AvatarController {
@@ -63,5 +64,9 @@ public class AvatarController {
         avatarService.deleteAvatar(id);
     }
 
-
+    @GetMapping("all")
+    public ResponseEntity<List<Avatar>> getAll(@RequestParam("page") Integer pageNum,
+                                               @RequestParam("size") Integer pageSize) {
+        return ResponseEntity.ok(avatarService.getAllAvatars(pageNum, pageSize));
+    }
 }
