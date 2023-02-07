@@ -21,6 +21,8 @@ dependencies {
 
     implementation "org.springdoc:springdoc-openapi-ui:1.6.11"
 
+    implementation 'org.liquibase:liquibase-core:4.19.0'
+
 
 }
 

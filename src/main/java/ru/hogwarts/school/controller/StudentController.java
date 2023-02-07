@@ -79,9 +79,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAverageAge());
     }
 
-    @GetMapping("/last-stugents")
+    @GetMapping("/last-students")
     public ResponseEntity<List<Student>> getLastStudents() {
         return ResponseEntity.ok(studentService.getLastStudents());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Student>> getStudentsByName(@PathVariable("name") String name) {
+        List<Student> students = studentService.getStudentsByName(name);
+        return ResponseEntity.ok(students);
     }
 
 }
