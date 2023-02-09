@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     public void uploadAvatar(long studentId, MultipartFile file) throws IOException {
         Student student = service.findStudent(studentId);
         Path path = Path.of(avatarDir, student + "." + getExtension(file.getOriginalFilename()));
@@ -53,24 +56,29 @@ public class AvatarService {
         avatar.setMediaType(file.getContentType());
         avatar.setData(file.getBytes());
 
+        logger.info("Request to upload avatar by  student id {}", studentId);
         avatarRepository.save(avatar);
 
     }
 
     public Avatar getAvatar(Long studentId) {
+        logger.info("Request to getting avatar by student id {}", studentId);
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private String getExtension(String fileName) {
+        logger.info("Was invoked method getting extension");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public void deleteAvatar(Long id) {
+        logger.info("Request to delete avatar by id {}", id);
         avatarRepository.delete(getAvatar(id));
     }
 
     public List<Avatar> getAllAvatars(Integer pageNum, Integer pageSize) {
         PageRequest request = PageRequest.of(pageNum - 1, pageSize);
+        logger.info("Request to getting avatars by page num {}", pageNum);
         return avatarRepository.findAll(request).getContent();
     }
 
