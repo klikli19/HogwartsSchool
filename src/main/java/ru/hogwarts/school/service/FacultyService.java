@@ -72,7 +72,7 @@ public class FacultyService {
     }
 
     public String findLongestName() {
-        logger.info("Request to getting longest  faculty name");
+        logger.info("Request to getting longest name of faculty");
         return facultyRepository.findAll()
                 .stream()
                 .max(Comparator.comparingLong(f ->f.getName().length()))
