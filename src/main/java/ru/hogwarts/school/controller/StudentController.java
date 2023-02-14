@@ -90,4 +90,13 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("filter-begin-letter-a")
+    public ResponseEntity<List<String>> filterStudentsByNameBeginsWithLetterA() {
+        return ResponseEntity.ok(studentService.filterStudentsByNameBeginsWithLetterA());
+    }
+
+    @GetMapping("time-request")
+    public Integer timeRequest() {
+        return studentService.timeRequest();
+    }
 }

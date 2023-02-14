@@ -7,6 +7,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 @Service
 public class StudentService {
@@ -17,7 +20,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public Student createStudent(Student student) {
         logger.info("Request to create student {}", student);
@@ -70,7 +73,9 @@ public class StudentService {
 
     public Double getAverageAge() {
         logger.info("Request to getting average age of students");
-        return studentRepository.getAverageAge( );
+        return studentRepository.findAll()
+                .stream()
+                .collect(Collectors.averagingDouble(Student::getAge));
     }
 
     public List<Student> getLastStudents() {
@@ -81,5 +86,27 @@ public class StudentService {
     public List<Student> getStudentsByName(String name) {
         logger.info("Request to getting student by name {}", name);
         return studentRepository.findStudentsByNameIgnoreCase(name);
+    }
+
+    public List<String> filterStudentsByNameBeginsWithLetterA() {
+        logger.info("Request to getting all students whose name begins with a letter A");
+        return studentRepository.findAll()
+                .stream()
+                .filter(name -> (name.getName().startsWith("А")))
+                .map(name -> name.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public Integer timeRequest() {
+        long start = System.currentTimeMillis();
+        int sum = Stream
+                .iterate(1, a -> a +1)
+                .limit(1_000_000)
+                .mapToInt(Integer::intValue)
+                .sum();
+        long timeRequest = System.currentTimeMillis() - start;
+        logger.info("Request to getting time request: " + timeRequest + "ms");
+        return sum;
     }
 }
