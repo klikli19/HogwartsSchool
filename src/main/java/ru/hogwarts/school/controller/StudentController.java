@@ -99,4 +99,10 @@ public class StudentController {
     public Integer timeRequest() {
         return studentService.timeRequest();
     }
+
+    @GetMapping("test-thread")
+    public void getStudentsName() {
+        studentService.getStudentsNameTestThread();
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -117,5 +118,30 @@ public class StudentService {
         logger.info("Request to getting time request: " + timeRequest + "ms");
 
         return result;
+    }
+
+    public void getStudentsNameTestThread() {
+        logger.info("Request to getting test thread");
+        List<String> studentList = studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+        System.out.println(studentList);
+
+        System.out.println(studentList.get(0));
+        System.out.println(studentList.get(1));
+
+        new Thread(() -> {
+            System.out.println(studentList.get(2));
+            System.out.println(studentList.get(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentList.get(4));
+            System.out.println(studentList.get(5));
+        }).start();
+
+
     }
 }
