@@ -8,6 +8,7 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -100,13 +101,21 @@ public class StudentService {
 
     public Integer timeRequest() {
         long start = System.currentTimeMillis();
-        int sum = Stream
-                .iterate(1, a -> a +1)
-                .limit(1_000_000)
-                .mapToInt(Integer::intValue)
+//        int sum = Stream
+//                .iterate(1, a -> a +1)
+//                .limit(1_000_000)
+//                .parallel()
+//                .reduce(0, Integer::sum);
+        int num = 1_000_000;
+
+        int result = IntStream
+                .range(1, num + 1)
                 .sum();
+
         long timeRequest = System.currentTimeMillis() - start;
+
         logger.info("Request to getting time request: " + timeRequest + "ms");
-        return sum;
+
+        return result;
     }
 }
