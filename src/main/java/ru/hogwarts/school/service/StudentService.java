@@ -165,8 +165,8 @@ public class StudentService {
     }
 
     public void printStudentName(int num) {
-        List<String> studentList = getList();
         synchronized (flag) {
+            List<String> studentList = getList();
             System.out.println(Thread.currentThread().getName() + ": " + studentList.get(num) + " - count: " + count);
             count++;
         }
