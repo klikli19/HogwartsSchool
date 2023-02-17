@@ -6,23 +6,23 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
-import java.sql.SQLOutput;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
 
 
 @Service
 public class StudentService {
 
    private final StudentRepository studentRepository;
-
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    public final Object flag = new Object();
+    int count = 0;
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-
-    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public Student createStudent(Student student) {
         logger.info("Request to create student {}", student);
@@ -122,26 +122,61 @@ public class StudentService {
 
     public void getStudentsNameTestThread() {
         logger.info("Request to getting test thread");
-        List<String> studentList = studentRepository
+        List<String> studentList = getList();
+        System.out.println(studentList);
+
+        System.out.println(Thread.currentThread().getName() + " " + studentList.get(0));
+        System.out.println(Thread.currentThread().getName() + " " + studentList.get(1));
+
+        Thread t1 = new Thread(() -> {
+            System.out.println(Thread.currentThread().getName() + " " + studentList.get(2));
+            System.out.println(Thread.currentThread().getName() + " " + studentList.get(3));
+        });
+
+        Thread t2 = new Thread(() -> {
+            System.out.println(Thread.currentThread().getName() + " " + studentList.get(4));
+            System.out.println(Thread.currentThread().getName() + " " + studentList.get(5));
+        });
+        t1.start();
+        t2.start();
+    }
+
+
+    public void getStudentsNameTestThreadTwo() {
+        logger.info("Request to getting test synchronized thread");
+        List<String> studentList = getList();
+        System.out.println(studentList);
+
+        printStudentName(0);
+        printStudentName(1);
+
+        Thread t1 = new Thread(() -> {
+            printStudentName(2);
+            printStudentName(3);
+        });
+
+        Thread t2 = new Thread(() -> {
+            printStudentName(4);
+            printStudentName(5);
+        });
+
+        t1.start();
+        t2.start();
+    }
+
+    public void printStudentName(int num) {
+        List<String> studentList = getList();
+        synchronized (flag) {
+            System.out.println(Thread.currentThread().getName() + ": " + studentList.get(num) + " - count: " + count);
+            count++;
+        }
+    }
+
+    private List<String> getList() {
+        return studentRepository
                 .findAll()
                 .stream()
                 .map(Student::getName)
                 .collect(Collectors.toList());
-        System.out.println(studentList);
-
-        System.out.println(studentList.get(0));
-        System.out.println(studentList.get(1));
-
-        new Thread(() -> {
-            System.out.println(studentList.get(2));
-            System.out.println(studentList.get(3));
-        }).start();
-
-        new Thread(() -> {
-            System.out.println(studentList.get(4));
-            System.out.println(studentList.get(5));
-        }).start();
-
-
     }
 }

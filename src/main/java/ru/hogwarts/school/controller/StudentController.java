@@ -105,4 +105,9 @@ public class StudentController {
         studentService.getStudentsNameTestThread();
     }
 
+    @GetMapping("test-thread-synchronized")
+    public void getStudentsNameSynchronized() {
+        studentService.getStudentsNameTestThreadTwo();
+    }
+
 }
