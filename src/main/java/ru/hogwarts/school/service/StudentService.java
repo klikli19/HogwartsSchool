@@ -123,7 +123,6 @@ public class StudentService {
     public void getStudentsNameTestThread() {
         logger.info("Request to getting test thread");
         List<String> studentList = getList();
-        System.out.println(studentList);
 
         System.out.println(Thread.currentThread().getName() + " " + studentList.get(0));
         System.out.println(Thread.currentThread().getName() + " " + studentList.get(1));
@@ -145,29 +144,27 @@ public class StudentService {
     public void getStudentsNameTestThreadTwo() {
         logger.info("Request to getting test synchronized thread");
         List<String> studentList = getList();
-        System.out.println(studentList);
 
-        printStudentName(0);
-        printStudentName(1);
+        printStudentName(studentList.get(0));
+        printStudentName(studentList.get(1));
 
         Thread t1 = new Thread(() -> {
-            printStudentName(2);
-            printStudentName(3);
+            printStudentName(studentList.get(2));
+            printStudentName(studentList.get(3));
         });
 
         Thread t2 = new Thread(() -> {
-            printStudentName(4);
-            printStudentName(5);
+            printStudentName(studentList.get(4));
+            printStudentName(studentList.get(5));
         });
 
         t1.start();
         t2.start();
     }
 
-    public void printStudentName(int num) {
+    public void printStudentName(String student) {
         synchronized (flag) {
-            List<String> studentList = getList();
-            System.out.println(Thread.currentThread().getName() + ": " + studentList.get(num) + " - count: " + count);
+            System.out.println(Thread.currentThread().getName() + ": " + student + " - count: " + count);
             count++;
         }
     }
