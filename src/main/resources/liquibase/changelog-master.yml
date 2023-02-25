@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/scripts/20230207201200_index_lesson.sql
